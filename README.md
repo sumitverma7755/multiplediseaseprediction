@@ -144,7 +144,7 @@ A sophisticated machine learning-based web application that predicts multiple di
 
 1. **Clone the Repository**
    ```bash
-   git clone https://github.com/yourusername/Multiple-Disease-Prediction-System.git
+   git clone [https://github.com/yourusername/Multiple-Disease-Prediction-System.git](https://github.com/sumitverma7755/multiplediseaseprediction.git)
    cd Multiple-Disease-Prediction-System
    ```
 
