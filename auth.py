@@ -344,9 +344,6 @@ def login_page():
     </style>
     """, unsafe_allow_html=True)
     
-    # Main container
-    st.markdown('<div class="login-container">', unsafe_allow_html=True)
-    
     # Login card
     col1, col2, col3 = st.columns([1, 2, 1])
     
@@ -421,15 +418,10 @@ def login_page():
             </div>
         </div>
         """, unsafe_allow_html=True)
-    
-    st.markdown('</div>', unsafe_allow_html=True)
 
 # Registration UI with Modern Design
 def registration_page():
     # Same CSS as login page (already included above)
-    
-    # Main container
-    st.markdown('<div class="login-container">', unsafe_allow_html=True)
     
     # Registration card
     col1, col2, col3 = st.columns([1, 2, 1])
@@ -504,8 +496,6 @@ def registration_page():
             Already have an account? <a href="#" onclick="return false;">Sign In</a>
         </div>
         """, unsafe_allow_html=True)
-    
-    st.markdown('</div>', unsafe_allow_html=True)
 
 # Admin Panel UI
 def admin_panel():
