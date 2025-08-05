@@ -156,6 +156,11 @@ def login_page():
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
         @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css');
         
+        /* Ensure proper font rendering */
+        * {
+            font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+        }
+        
         /* Hide sidebar on login page */
         .css-1d391kg, .css-1lcbmhc, .css-17eq0hr, .css-k7vsyb, .css-1y0tadw {
             display: none !important;
@@ -273,17 +278,24 @@ def login_page():
         }
         
         .login-header h2 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #1a202c;
-            margin-bottom: 8px;
-            font-family: 'Poppins', sans-serif;
+            font-size: 2.5rem !important;
+            font-weight: 700 !important;
+            color: #1a202c !important;
+            margin-bottom: 8px !important;
+            font-family: 'Poppins', sans-serif !important;
+            display: block !important;
+            visibility: visible !important;
+        }
         }
         
         .login-header p {
-            color: #718096;
-            font-size: 1.1rem;
-            font-weight: 400;
+            color: #718096 !important;
+            font-size: 1.1rem !important;
+            font-weight: 400 !important;
+            margin: 8px 0 24px 0 !important;
+            line-height: 1.5 !important;
+            display: block !important;
+            visibility: visible !important;
         }
         
         .input-group {
@@ -482,7 +494,7 @@ def login_page():
             <div class="login-left">
                 <div class="login-header">
                     <h2>Welcome back</h2>
-                    <p>Login to your account</p>
+                    <p>Please login to your account</p>
                 </div>
     """, unsafe_allow_html=True)
     
