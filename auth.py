@@ -338,13 +338,13 @@ def login_page():
             # Username field
             st.markdown('<div class="input-group">', unsafe_allow_html=True)
             st.markdown('<label class="input-label">👤 Username</label>', unsafe_allow_html=True)
-            username = st.text_input("", placeholder="Enter your username", label_visibility="collapsed", key="username_input")
+            username = st.text_input("Username", placeholder="Enter your username", label_visibility="collapsed", key="username_input")
             st.markdown('</div>', unsafe_allow_html=True)
             
             # Password field
             st.markdown('<div class="input-group">', unsafe_allow_html=True)
             st.markdown('<label class="input-label">🔒 Password</label>', unsafe_allow_html=True)
-            password = st.text_input("", placeholder="Enter your password", type="password", label_visibility="collapsed", key="password_input")
+            password = st.text_input("Password", placeholder="Enter your password", type="password", label_visibility="collapsed", key="password_input")
             st.markdown('</div>', unsafe_allow_html=True)
             
             # Remember me checkbox
@@ -421,25 +421,25 @@ def registration_page():
             # Username field
             st.markdown('<div class="input-group">', unsafe_allow_html=True)
             st.markdown('<label class="input-label">👤 Username</label>', unsafe_allow_html=True)
-            username = st.text_input("", placeholder="Choose a username", label_visibility="collapsed", key="reg_username")
+            username = st.text_input("Username", placeholder="Choose a username", label_visibility="collapsed", key="reg_username")
             st.markdown('</div>', unsafe_allow_html=True)
             
             # Email field
             st.markdown('<div class="input-group">', unsafe_allow_html=True)
             st.markdown('<label class="input-label">📧 Email Address</label>', unsafe_allow_html=True)
-            email = st.text_input("", placeholder="Enter your email", label_visibility="collapsed", key="reg_email")
+            email = st.text_input("Email", placeholder="Enter your email", label_visibility="collapsed", key="reg_email")
             st.markdown('</div>', unsafe_allow_html=True)
             
             # Password field
             st.markdown('<div class="input-group">', unsafe_allow_html=True)
             st.markdown('<label class="input-label">🔒 Password</label>', unsafe_allow_html=True)
-            password = st.text_input("", placeholder="Create a password (min. 6 characters)", type="password", label_visibility="collapsed", key="reg_password")
+            password = st.text_input("Password", placeholder="Create a password (min. 6 characters)", type="password", label_visibility="collapsed", key="reg_password")
             st.markdown('</div>', unsafe_allow_html=True)
             
             # Confirm password field
             st.markdown('<div class="input-group">', unsafe_allow_html=True)
             st.markdown('<label class="input-label">🔒 Confirm Password</label>', unsafe_allow_html=True)
-            confirm_password = st.text_input("", placeholder="Confirm your password", type="password", label_visibility="collapsed", key="reg_confirm_password")
+            confirm_password = st.text_input("Confirm Password", placeholder="Confirm your password", type="password", label_visibility="collapsed", key="reg_confirm_password")
             st.markdown('</div>', unsafe_allow_html=True)
             
             # Terms agreement
