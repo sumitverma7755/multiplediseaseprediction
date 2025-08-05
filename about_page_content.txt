@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 if (selected == 'About'):
     st.markdown("""
     <div style="text-align: center; padding: 20px;">
@@ -193,4 +194,201 @@ if (selected == 'About'):
             </span>
         </p>
     </div>
+=======
+if (selected == 'About'):
+    st.markdown("""
+    <div style="text-align: center; padding: 20px;">
+        <h1 style="color: #3498DB;">About This System</h1>
+        <p style="font-size: 1.2rem; color: #555;">Learn more about our Advanced Disease Prediction System</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # System Overview
+    st.markdown("""
+    <div style="background-color: #f8f9fa; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+        <h2 style="color: #2C3E50; border-bottom: 2px solid #3498DB; padding-bottom: 10px;">System Overview</h2>
+        <p style="font-size: 1.1rem; line-height: 1.6;">
+            The Advanced Disease Prediction System is a state-of-the-art application that leverages machine learning algorithms to predict 
+            the likelihood of various diseases based on patient health parameters. This system aims to assist in early detection and 
+            preventive healthcare by providing risk assessments for diabetes, heart disease, and Parkinson's disease.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Technical Details
+    st.markdown("""
+    <div style="background-color: #f8f9fa; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+        <h2 style="color: #2C3E50; border-bottom: 2px solid #3498DB; padding-bottom: 10px;">Technical Details</h2>
+        
+        <h3 style="color: #3498DB; margin-top: 20px;">Machine Learning Models</h3>
+        <p>
+            Our system employs various supervised learning algorithms including:
+        </p>
+        <ul>
+            <li><strong>Random Forest Classifiers:</strong> Ensemble learning method for classification that operates by constructing multiple decision trees.</li>
+            <li><strong>Support Vector Machines (SVM):</strong> Supervised learning models used for classification and regression analysis.</li>
+            <li><strong>Gradient Boosting:</strong> A machine learning technique that produces a prediction model in the form of an ensemble of weak prediction models.</li>
+        </ul>
+        
+        <h3 style="color: #3498DB; margin-top: 20px;">Data Processing</h3>
+        <p>
+            The system processes user input through several stages:
+        </p>
+        <ol>
+            <li>Data validation and normalization</li>
+            <li>Feature scaling to ensure all inputs are on comparable scales</li>
+            <li>Prediction using pre-trained models</li>
+            <li>Confidence calculation and result interpretation</li>
+            <li>Visualization generation for better understanding</li>
+        </ol>
+        
+        <h3 style="color: #3498DB; margin-top: 20px;">Visualization Techniques</h3>
+        <p>
+            The system provides various visualizations to help interpret results:
+        </p>
+        <ul>
+            <li>Feature importance plots to understand which factors most influence predictions</li>
+            <li>Probability distribution charts to visualize confidence levels</li>
+            <li>Health metric gauges to compare values against normal ranges</li>
+            <li>Comparative analysis charts to benchmark against population averages</li>
+        </ul>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Disease Information
+    tab1, tab2, tab3 = st.tabs(["Diabetes", "Heart Disease", "Parkinson's Disease"])
+    
+    with tab1:
+        st.markdown("""
+        <div style="padding: 15px;">
+            <h3 style="color: #3498DB;">Diabetes</h3>
+            <p>
+                Diabetes is a chronic disease that occurs either when the pancreas does not produce enough insulin or when the body cannot 
+                effectively use the insulin it produces. Insulin is a hormone that regulates blood sugar.
+            </p>
+            
+            <h4 style="color: #2C3E50; margin-top: 15px;">Key Risk Factors:</h4>
+            <ul>
+                <li>High blood glucose levels</li>
+                <li>Family history of diabetes</li>
+                <li>Overweight or obesity</li>
+                <li>Physical inactivity</li>
+                <li>Age (risk increases with age)</li>
+                <li>High blood pressure</li>
+                <li>Abnormal cholesterol and triglyceride levels</li>
+            </ul>
+            
+            <h4 style="color: #2C3E50; margin-top: 15px;">Prevention Tips:</h4>
+            <ul>
+                <li>Maintain a healthy weight</li>
+                <li>Stay physically active</li>
+                <li>Eat a balanced diet rich in fruits, vegetables, and whole grains</li>
+                <li>Limit sugar and refined carbohydrates</li>
+                <li>Regular health check-ups</li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    with tab2:
+        st.markdown("""
+        <div style="padding: 15px;">
+            <h3 style="color: #E74C3C;">Heart Disease</h3>
+            <p>
+                Heart disease refers to various types of conditions that can affect heart function. These include coronary artery disease, 
+                heart arrhythmias, and heart defects you're born with.
+            </p>
+            
+            <h4 style="color: #2C3E50; margin-top: 15px;">Key Risk Factors:</h4>
+            <ul>
+                <li>High blood pressure</li>
+                <li>High cholesterol levels</li>
+                <li>Smoking</li>
+                <li>Diabetes</li>
+                <li>Family history of heart disease</li>
+                <li>Age (risk increases with age)</li>
+                <li>Physical inactivity</li>
+                <li>Obesity</li>
+                <li>Stress</li>
+            </ul>
+            
+            <h4 style="color: #2C3E50; margin-top: 15px;">Prevention Tips:</h4>
+            <ul>
+                <li>Regular exercise</li>
+                <li>Healthy diet low in saturated fats, trans fats, and cholesterol</li>
+                <li>Maintain a healthy weight</li>
+                <li>Limit alcohol consumption</li>
+                <li>Don't smoke</li>
+                <li>Manage stress</li>
+                <li>Regular health check-ups</li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    with tab3:
+        st.markdown("""
+        <div style="padding: 15px;">
+            <h3 style="color: #2ECC71;">Parkinson's Disease</h3>
+            <p>
+                Parkinson's disease is a progressive nervous system disorder that affects movement. Symptoms start gradually, sometimes 
+                with a barely noticeable tremor in just one hand.
+            </p>
+            
+            <h4 style="color: #2C3E50; margin-top: 15px;">Key Risk Factors:</h4>
+            <ul>
+                <li>Age (risk increases with age)</li>
+                <li>Heredity (having close relatives with Parkinson's disease)</li>
+                <li>Sex (men are more likely to develop Parkinson's disease than women)</li>
+                <li>Exposure to toxins</li>
+                <li>Serious head injury</li>
+            </ul>
+            
+            <h4 style="color: #2C3E50; margin-top: 15px;">Early Signs:</h4>
+            <ul>
+                <li>Tremor, often in a limb, especially at rest</li>
+                <li>Slowed movement (bradykinesia)</li>
+                <li>Rigid muscles</li>
+                <li>Impaired posture and balance</li>
+                <li>Loss of automatic movements</li>
+                <li>Speech changes</li>
+                <li>Writing changes</li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    # References and Resources
+    st.markdown("""
+    <div style="background-color: #f8f9fa; padding: 20px; border-radius: 10px; margin-top: 20px;">
+        <h2 style="color: #2C3E50; border-bottom: 2px solid #3498DB; padding-bottom: 10px;">References & Resources</h2>
+        
+        <h3 style="color: #3498DB; margin-top: 20px;">Data Sources</h3>
+        <ul>
+            <li>UCI Machine Learning Repository - Diabetes Dataset</li>
+            <li>Cleveland Heart Disease Dataset</li>
+            <li>Parkinson's Disease Classification Dataset</li>
+        </ul>
+        
+        <h3 style="color: #3498DB; margin-top: 20px;">Further Reading</h3>
+        <ul>
+            <li>American Diabetes Association: <a href="https://www.diabetes.org/" target="_blank">www.diabetes.org</a></li>
+            <li>American Heart Association: <a href="https://www.heart.org/" target="_blank">www.heart.org</a></li>
+            <li>Parkinson's Foundation: <a href="https://www.parkinson.org/" target="_blank">www.parkinson.org</a></li>
+            <li>World Health Organization: <a href="https://www.who.int/" target="_blank">www.who.int</a></li>
+        </ul>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Contact Information
+    st.markdown("""
+    <div style="background-color: #f8f9fa; padding: 20px; border-radius: 10px; margin-top: 20px; margin-bottom: 40px;">
+        <h2 style="color: #2C3E50; border-bottom: 2px solid #3498DB; padding-bottom: 10px;">Contact Information</h2>
+        <p style="font-size: 1.1rem; line-height: 1.6;">
+            For questions, feedback, or support regarding this system, please contact us at:
+        </p>
+        <p style="font-size: 1.1rem; line-height: 1.6; text-align: center; margin-top: 20px;">
+            <span style="background-color: #3498DB; color: white; padding: 10px 20px; border-radius: 5px;">
+                support@advanceddiseaseprediction.org
+            </span>
+        </p>
+    </div>
+>>>>>>> 40601d39998fe314dcb66af2b1b37be8bb6b3d03
     """, unsafe_allow_html=True) 
