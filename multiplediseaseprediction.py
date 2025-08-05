@@ -1138,8 +1138,8 @@ if st.session_state['user']['role'] == 'admin':
     admin_panel()
     st.stop()
 
-# Show user dashboard
-user_dashboard(st.session_state['user'])
+# User is authenticated, continue with main app
+# The user dashboard will be shown when they select "History" from the menu
 
 # Welcome Page
 if (selected == 'Welcome'):
