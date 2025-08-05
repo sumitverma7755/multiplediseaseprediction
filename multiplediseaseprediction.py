@@ -500,11 +500,45 @@ except Exception as e:
 
 # Set page configuration with light background and dark text
 st.set_page_config(
-    page_title="Multiple Disease Prediction System",
-    page_icon="🏥",
+    page_title="Health AI - Disease Prediction",
+    page_icon="🩺",
     layout="wide",
     initial_sidebar_state="expanded"
 )
+
+# Hide Streamlit style
+hide_streamlit_style = """
+<style>
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    header {visibility: hidden;}
+    .stDeployButton {display: none;}
+    .stDecoration {display: none;}
+    
+    /* Import Inter font */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    
+    /* Apply Inter font globally */
+    html, body, [class*="css"] {
+        font-family: 'Inter', sans-serif;
+    }
+    
+    /* Make login page full screen */
+    .block-container {
+        padding-top: 0rem;
+        padding-bottom: 0rem;
+        padding-left: 0rem;
+        padding-right: 0rem;
+        max-width: none;
+    }
+    
+    /* Hide sidebar on login page */
+    .css-1d391kg {
+        display: none;
+    }
+</style>
+"""
+st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
 # Custom CSS to enhance the appearance with better font visibility
 st.markdown("""
