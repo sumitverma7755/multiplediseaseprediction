@@ -956,6 +956,19 @@ def load_model(model_path, n_features, model_name="Unknown"):
         st.error(f"Error loading {model_name} model: {str(e)}")
         return DummyModel(model_name)
 
+# Initialize session state and check login
+if 'logged_in' not in st.session_state:
+    st.session_state['logged_in'] = False
+
+if 'user' not in st.session_state:
+    st.session_state['user'] = None
+
+# Check if user is logged in
+if not st.session_state['logged_in']:
+    # Show login page with hidden sidebar
+    login_page()
+    st.stop()
+
 # Add a sidebar for navigation
 with st.sidebar:
     # Add title and logo with improved visibility
@@ -965,6 +978,20 @@ with st.sidebar:
         <h3 style="color: #333333; font-size: 1.5rem; font-weight: 600; margin-top: 0;">Advanced Disease Prediction</h3>
     </div>
     """, unsafe_allow_html=True)
+    
+    # Show user info and logout button
+    if 'user' in st.session_state and st.session_state['user']:
+        user = st.session_state['user']
+        st.markdown(f"""
+        <div style="background-color: #e0f2fe; padding: 10px; border-radius: 8px; margin-bottom: 15px; border-left: 4px solid #0277bd;">
+            <p style="margin: 0; color: #0277bd; font-weight: 600;">👤 {user['username']}</p>
+            <p style="margin: 0; color: #555; font-size: 0.9rem;">Role: {user['role'].title()}</p>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        # Logout button
+        if st.button("🚪 Logout", key="logout_button", help="Sign out of your account"):
+            logout()
     
     # Add a separator
     st.markdown("<hr style='margin: 15px 0; border: 0; height: 2px; background: linear-gradient(to right, #1e40af, #3b82f6, #1e40af);'>", unsafe_allow_html=True)

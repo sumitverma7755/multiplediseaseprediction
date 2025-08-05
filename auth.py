@@ -98,14 +98,46 @@ def get_user_predictions(user_id):
 
 # Login UI with Modern Design
 def login_page():
-    # Custom CSS for modern login page
+    # Initialize login state if not exists
+    if 'logged_in' not in st.session_state:
+        st.session_state['logged_in'] = False
+    
+    # Custom CSS for modern login page with hidden sidebar
     st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
     
+    /* Hide sidebar on login page */
+    .css-1d391kg, .css-1lcbmhc, .css-17eq0hr, .css-k7vsyb, .css-1y0tadw {
+        display: none !important;
+    }
+    
+    /* Hide sidebar toggle button */
+    .css-1rs6os.edgvbvh3, .css-17eq0hr.edgvbvh10 {
+        display: none !important;
+    }
+    
+    /* Hide main menu button */
+    .css-14xtw13.e8zbici0, .css-10trblm.e16nr0p30 {
+        display: none !important;
+    }
+    
+    /* Streamlit header hiding */
+    header[data-testid="stHeader"] {
+        display: none !important;
+    }
+    
+    /* Main app styling */
     .stApp {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         font-family: 'Inter', sans-serif;
+    }
+    
+    /* Full screen container for login */
+    .main .block-container {
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+        max-width: 100% !important;
     }
     
     .login-container {
@@ -362,6 +394,7 @@ def login_page():
                     user = authenticate_user(username, password)
                     if user:
                         st.session_state['user'] = user
+                        st.session_state['logged_in'] = True
                         st.markdown('<div class="success-message">✅ Login successful! Redirecting...</div>', unsafe_allow_html=True)
                         st.rerun()
                     else:
@@ -509,9 +542,199 @@ def user_dashboard():
     else:
         st.info("You haven't made any predictions yet. Try out our disease prediction tools!")
 
+# Main Application UI (shown after login)
+def main_app():
+    # Custom CSS to show sidebar and reset styling
+    st.markdown("""
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    
+    /* Reset login page CSS - show sidebar */
+    .css-1d391kg, .css-1lcbmhc, .css-17eq0hr, .css-k7vsyb, .css-1y0tadw {
+        display: block !important;
+    }
+    
+    /* Show sidebar toggle button */
+    .css-1rs6os.edgvbvh3, .css-17eq0hr.edgvbvh10 {
+        display: block !important;
+    }
+    
+    /* Show main menu button */
+    .css-14xtw13.e8zbici0, .css-10trblm.e16nr0p30 {
+        display: block !important;
+    }
+    
+    /* Show Streamlit header */
+    header[data-testid="stHeader"] {
+        display: block !important;
+    }
+    
+    /* Main app styling */
+    .stApp {
+        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        font-family: 'Inter', sans-serif;
+    }
+    
+    /* Sidebar styling */
+    .css-1d391kg {
+        background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    }
+    
+    .sidebar-title {
+        color: #fff;
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+        text-align: center;
+        padding: 10px;
+        border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .user-info {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        padding: 15px;
+        margin-bottom: 20px;
+        color: #fff;
+        text-align: center;
+    }
+    
+    .logout-button {
+        background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+        color: white !important;
+        border: none !important;
+        padding: 10px 20px !important;
+        border-radius: 8px !important;
+        font-weight: 600 !important;
+        width: 100% !important;
+        margin-top: 20px !important;
+        transition: all 0.3s ease !important;
+        cursor: pointer !important;
+    }
+    
+    .logout-button:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 8px 25px rgba(239, 68, 68, 0.3) !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+    
+    # Sidebar content
+    with st.sidebar:
+        st.markdown('<div class="sidebar-title">🩺 Health AI</div>', unsafe_allow_html=True)
+        
+        # User info
+        if 'user' in st.session_state:
+            user = st.session_state['user']
+            st.markdown(f"""
+            <div class="user-info">
+                <div style="font-size: 1.1rem; font-weight: 600; margin-bottom: 5px;">
+                    👤 {user['username']}
+                </div>
+                <div style="font-size: 0.9rem; opacity: 0.8;">
+                    Role: {user['role'].title()}
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+        
+        # Navigation menu
+        st.markdown("### 📋 Navigation")
+        page = st.selectbox(
+            "Choose a page:",
+            ["Dashboard", "Disease Prediction", "Prediction History", "Profile Settings"],
+            key="page_selector"
+        )
+        
+        # Logout button
+        if st.button("🚪 Logout", key="logout_btn", help="Sign out of your account"):
+            logout()
+    
+    # Main content area
+    st.title("🏥 Multiple Disease Prediction System")
+    
+    if page == "Dashboard":
+        user_dashboard()
+    elif page == "Disease Prediction":
+        st.header("🔬 Disease Prediction Tools")
+        st.info("Disease prediction functionality will be integrated here from your main application.")
+        
+        # Placeholder for disease prediction options
+        col1, col2, col3 = st.columns(3)
+        
+        with col1:
+            st.markdown("""
+            <div style="background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); padding: 20px; border-radius: 10px; text-align: center; color: white;">
+                <h3>💓 Heart Disease</h3>
+                <p>Predict heart disease risk based on medical parameters</p>
+            </div>
+            """, unsafe_allow_html=True)
+        
+        with col2:
+            st.markdown("""
+            <div style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); padding: 20px; border-radius: 10px; text-align: center; color: white;">
+                <h3>🩸 Diabetes</h3>
+                <p>Assess diabetes risk using health indicators</p>
+            </div>
+            """, unsafe_allow_html=True)
+        
+        with col3:
+            st.markdown("""
+            <div style="background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); padding: 20px; border-radius: 10px; text-align: center; color: white;">
+                <h3>🧠 Parkinson's</h3>
+                <p>Evaluate Parkinson's disease probability</p>
+            </div>
+            """, unsafe_allow_html=True)
+        
+    elif page == "Prediction History":
+        st.header("📊 Your Prediction History")
+        user_dashboard()
+        
+    elif page == "Profile Settings":
+        st.header("⚙️ Profile Settings")
+        st.info("Profile management features coming soon!")
+        
+        if 'user' in st.session_state:
+            user = st.session_state['user']
+            
+            with st.form("profile_form"):
+                st.subheader("Account Information")
+                
+                col1, col2 = st.columns(2)
+                with col1:
+                    st.text_input("Username", value=user['username'], disabled=True)
+                    st.text_input("Role", value=user['role'].title(), disabled=True)
+                
+                with col2:
+                    st.text_input("User ID", value=str(user['id']), disabled=True)
+                    st.text_input("Account Type", value="Standard User", disabled=True)
+                
+                st.subheader("Change Password")
+                current_password = st.text_input("Current Password", type="password")
+                new_password = st.text_input("New Password", type="password")
+                confirm_password = st.text_input("Confirm New Password", type="password")
+                
+                if st.form_submit_button("Update Profile"):
+                    st.info("Profile update functionality will be implemented soon!")
+
+# App Controller Function
+def app_controller():
+    """Main controller to handle login state and page routing"""
+    
+    # Initialize session state
+    if 'logged_in' not in st.session_state:
+        st.session_state['logged_in'] = False
+    
+    # Check login status and route accordingly
+    if not st.session_state['logged_in']:
+        login_page()
+    else:
+        main_app()
+
 # Logout function
 def logout():
+    """Clear session state and return to login page"""
     st.session_state.pop('user', None)
+    st.session_state['logged_in'] = False
     st.rerun()
 
 # Initialize the database
