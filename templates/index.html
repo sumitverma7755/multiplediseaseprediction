@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiple Disease Prediction System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        .disease-section {
+            margin: 30px 0;
+            padding: 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            background: #f9f9f9;
+        }
+        .form-group {
+            margin: 15px 0;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            background: #667eea;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background: #5a67d8;
+        }
+        .result {
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .positive {
+            background: #fed7d7;
+            color: #c53030;
+            border: 1px solid #feb2b2;
+        }
+        .negative {
+            background: #c6f6d5;
+            color: #2f855a;
+            border: 1px solid #9ae6b4;
+        }
+        .error {
+            background: #fed7d7;
+            color: #c53030;
+            border: 1px solid #feb2b2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏥 Multiple Disease Prediction System</h1>
+        
+        <!-- Diabetes Prediction -->
+        <div class="disease-section">
+            <h2>🩸 Diabetes Prediction</h2>
+            <form id="diabetesForm">
+                <div class="form-group">
+                    <label>Pregnancies:</label>
+                    <input type="number" name="pregnancies" step="1" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label>Glucose Level:</label>
+                    <input type="number" name="glucose" step="0.1" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label>Blood Pressure:</label>
+                    <input type="number" name="blood_pressure" step="0.1" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label>Skin Thickness:</label>
+                    <input type="number" name="skin_thickness" step="0.1" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label>Insulin:</label>
+                    <input type="number" name="insulin" step="0.1" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label>BMI:</label>
+                    <input type="number" name="bmi" step="0.1" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label>Diabetes Pedigree Function:</label>
+                    <input type="number" name="diabetes_pedigree" step="0.001" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label>Age:</label>
+                    <input type="number" name="age" step="1" min="0" required>
+                </div>
+                <button type="submit">Predict Diabetes</button>
+                <div id="diabetesResult"></div>
+            </form>
+        </div>
+
+        <!-- Heart Disease Prediction -->
+        <div class="disease-section">
+            <h2>❤️ Heart Disease Prediction</h2>
+            <form id="heartForm">
+                <div class="form-group">
+                    <label>Age:</label>
+                    <input type="number" name="age" step="1" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label>Sex (1 = Male, 0 = Female):</label>
+                    <select name="sex" required>
+                        <option value="">Select</option>
+                        <option value="1">Male</option>
+                        <option value="0">Female</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Chest Pain Type (0-3):</label>
+                    <input type="number" name="cp" step="1" min="0" max="3" required>
+                </div>
+                <div class="form-group">
+                    <label>Resting Blood Pressure:</label>
+                    <input type="number" name="trestbps" step="1" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label>Cholesterol:</label>
+                    <input type="number" name="chol" step="1" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label>Fasting Blood Sugar > 120 mg/dl (1 = Yes, 0 = No):</label>
+                    <select name="fbs" required>
+                        <option value="">Select</option>
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Resting ECG (0-2):</label>
+                    <input type="number" name="restecg" step="1" min="0" max="2" required>
+                </div>
+                <div class="form-group">
+                    <label>Maximum Heart Rate:</label>
+                    <input type="number" name="thalach" step="1" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label>Exercise Induced Angina (1 = Yes, 0 = No):</label>
+                    <select name="exang" required>
+                        <option value="">Select</option>
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>ST Depression:</label>
+                    <input type="number" name="oldpeak" step="0.1" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label>Slope (0-2):</label>
+                    <input type="number" name="slope" step="1" min="0" max="2" required>
+                </div>
+                <div class="form-group">
+                    <label>Number of Major Vessels (0-3):</label>
+                    <input type="number" name="ca" step="1" min="0" max="3" required>
+                </div>
+                <div class="form-group">
+                    <label>Thalassemia (0-3):</label>
+                    <input type="number" name="thal" step="1" min="0" max="3" required>
+                </div>
+                <button type="submit">Predict Heart Disease</button>
+                <div id="heartResult"></div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Diabetes Form Handler
+        document.getElementById('diabetesForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+            
+            try {
+                const response = await fetch('/predict/diabetes', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                const resultDiv = document.getElementById('diabetesResult');
+                
+                if (result.error) {
+                    resultDiv.innerHTML = `<div class="result error">Error: ${result.error}</div>`;
+                } else {
+                    const isPositive = result.prediction.includes('Diabetic') && !result.prediction.includes('Not');
+                    resultDiv.innerHTML = `<div class="result ${isPositive ? 'positive' : 'negative'}">
+                        Prediction: ${result.prediction}
+                    </div>`;
+                }
+            } catch (error) {
+                document.getElementById('diabetesResult').innerHTML = 
+                    `<div class="result error">Error: ${error.message}</div>`;
+            }
+        });
+
+        // Heart Disease Form Handler
+        document.getElementById('heartForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+            
+            try {
+                const response = await fetch('/predict/heart', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                const resultDiv = document.getElementById('heartResult');
+                
+                if (result.error) {
+                    resultDiv.innerHTML = `<div class="result error">Error: ${result.error}</div>`;
+                } else {
+                    const isPositive = result.prediction.includes('Heart Disease') && !result.prediction.includes('No');
+                    resultDiv.innerHTML = `<div class="result ${isPositive ? 'positive' : 'negative'}">
+                        Prediction: ${result.prediction}
+                    </div>`;
+                }
+            } catch (error) {
+                document.getElementById('heartResult').innerHTML = 
+                    `<div class="result error">Error: ${error.message}</div>`;
+            }
+        });
+    </script>
+</body>
+</html>
