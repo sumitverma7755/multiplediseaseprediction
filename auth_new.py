@@ -4,13 +4,6 @@ import hashlib
 import pandas as pd
 import time
 
-# Initialize database tables on import
-def init_database():
-    """Initialize database tables"""
-    create_user_table()
-    create_prediction_table()
-    create_admin_user()
-
 # Database functions
 def create_user_table():
     """Create users table if it doesn't exist"""
