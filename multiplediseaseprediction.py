@@ -73,6 +73,7 @@ import requests
 from PIL import Image
 from io import BytesIO
 import base64
+import random
 from auth import (
     login_page, registration_page, admin_panel, user_dashboard, 
     logout, save_prediction, get_user_predictions
@@ -1175,30 +1176,6 @@ if 'user' not in st.session_state:
 if 'show_registration' not in st.session_state:
     st.session_state['show_registration'] = False
 
-# Add authentication UI before the sidebar
-if not st.session_state['user']:
-    if st.session_state.get('show_registration', False):
-        registration_page()
-        if st.button("Already have an account? Login"):
-            st.session_state['show_registration'] = False
-            st.rerun()
-    else:
-        login_page()
-        if st.button("Don't have an account? Register"):
-            st.session_state['show_registration'] = True
-            st.rerun()
-    st.stop()
-
-# Add logout button to sidebar
-with st.sidebar:
-    if st.button("Logout"):
-        logout()
-
-# Show admin panel for admin users
-if st.session_state['user']['role'] == 'admin':
-    admin_panel()
-    st.stop()
-
 # User is authenticated, continue with main app
 # The user dashboard will be shown when they select "History" from the menu
 
@@ -1211,7 +1188,6 @@ if (selected == 'Welcome'):
     show_help_button()
     
     # Show random tips
-    import random
     tips = [
         ("Quick Tip", "Use the sidebar menu to navigate between different disease predictions."),
         ("Did you know?", "Our AI models are trained on thousands of real medical cases."),
