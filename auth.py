@@ -490,11 +490,11 @@ def login_page():
     with st.form("login_form", clear_on_submit=False):
         # Email field with icon
         st.markdown('<div class="input-group"><i class="fas fa-envelope input-icon"></i></div>', unsafe_allow_html=True)
-        username = st.text_input("", placeholder="Email address", label_visibility="collapsed", key="username_input")
+        username = st.text_input("Email address", placeholder="Email address", label_visibility="collapsed", key="username_input")
         
         # Password field with icon
         st.markdown('<div class="input-group"><i class="fas fa-lock input-icon"></i></div>', unsafe_allow_html=True)
-        password = st.text_input("", placeholder="Password", type="password", label_visibility="collapsed", key="password_input")
+        password = st.text_input("Password", placeholder="Password", type="password", label_visibility="collapsed", key="password_input")
         
         # Remember me and forgot password row
         col1, col2 = st.columns([1, 1])
