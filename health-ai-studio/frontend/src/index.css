@@ -1,0 +1,31 @@
+﻿@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: Inter, Segoe UI, Arial, sans-serif;
+  color: #0f172a;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #f8fafc 0%, #eef2f7 100%);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.card-hover {
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 44px rgba(10, 22, 33, 0.12);
+}
+
+.scrollbar-thin {
+  scrollbar-width: thin;
+}

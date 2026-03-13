@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiple Disease Prediction System</title>
+    <meta name="description" content="AI-powered disease prediction system for Diabetes, Heart Disease, and Parkinson's Disease.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --ink:      #0b1523;
+            --muted:    #4e5f72;
+            --surface:  #ffffff;
+            --line:     rgba(120,145,175,0.20);
+            --brand:    #00d4c8;
+            --brand-2:  #3b6cff;
+            --brand-3:  #7c3aed;
+            --accent:   #f59e0b;
+            --positive: #22c55e;
+            --negative: #ef4444;
+            --shadow:   0 18px 52px rgba(5,12,27,0.14);
+        }
+
+        html, body {
+            font-family: 'DM Sans', 'Segoe UI', sans-serif;
+            color: var(--ink);
+            min-height: 100vh;
+            background:
+                radial-gradient(ellipse at 5% 6%,  rgba(0,212,200,0.14), transparent 26%),
+                radial-gradient(ellipse at 94% 5%,  rgba(59,108,255,0.16), transparent 26%),
+                linear-gradient(180deg, #07101e 0%, #0d1b30 16%, #edf2f8 16.2%, #f4f8ff 100%);
+        }
+
+        /* ── Header ─────────────────────────────────────── */
+        header {
+            padding: 2rem 1.5rem;
+            text-align: center;
+            color: #f0faff;
+        }
+
+        .header-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.4rem 0.9rem;
+            border-radius: 999px;
+            background: rgba(255,255,255,0.10);
+            border: 1px solid rgba(0,212,200,0.30);
+            color: #a0f5ee;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            margin-bottom: 0.8rem;
+        }
+
+        .beacon-dot {
+            width: 7px; height: 7px;
+            border-radius: 50%;
+            background: var(--brand);
+            animation: pulseRing 2s ease-out infinite;
+        }
+
+        @keyframes pulseRing {
+            0%   { box-shadow: 0 0 0 0 rgba(0,212,200,0.55); }
+            70%  { box-shadow: 0 0 0 9px rgba(0,212,200,0); }
+            100% { box-shadow: 0 0 0 0 rgba(0,212,200,0); }
+        }
+
+        header h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-weight: 700;
+            letter-spacing: -0.04em;
+            color: #ffffff;
+            text-shadow: 0 2px 20px rgba(0,212,200,0.25);
+        }
+
+        header p {
+            margin-top: 0.6rem;
+            color: rgba(224,240,255,0.78);
+            font-size: 1.05rem;
+            max-width: 580px;
+            margin-inline: auto;
+            line-height: 1.65;
+        }
+
+        /* ── Module Tabs ─────────────────────────────────── */
+        main {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 1.25rem 3rem;
+        }
+
+        .module-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            flex: 1;
+            min-width: 160px;
+            padding: 0.75rem 1.2rem;
+            border: 1.5px solid var(--line);
+            border-radius: 14px;
+            background: rgba(255,255,255,0.96);
+            color: var(--muted);
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .tab-btn:hover {
+            border-color: var(--brand);
+            color: var(--ink);
+            box-shadow: 0 8px 22px rgba(0,212,200,0.12);
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, var(--brand), var(--brand-2));
+            color: #ffffff;
+            border-color: transparent;
+            box-shadow: 0 12px 28px rgba(59,108,255,0.28);
+        }
+
+        /* ── Card ────────────────────────────────────────── */
+        .card {
+            background: var(--surface);
+            border: 1.5px solid var(--line);
+            border-radius: 22px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            animation: riseIn 0.45s ease both;
+        }
+
+        @keyframes riseIn {
+            from { opacity: 0; transform: translateY(14px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .card-hero {
+            background:
+                radial-gradient(ellipse at top right, rgba(0,212,200,0.16), transparent 32%),
+                linear-gradient(135deg, #060d1c 0%, #0a1932 55%, #122244 100%);
+            border: 1px solid rgba(0,212,200,0.18);
+            color: #f0faff;
+            border-radius: 18px;
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 1.75rem;
+            box-shadow: 0 20px 50px rgba(4,10,25,0.22);
+        }
+
+        .card-hero-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.28rem 0.7rem;
+            border-radius: 999px;
+            background: rgba(0,212,200,0.15);
+            border: 1px solid rgba(0,212,200,0.30);
+            color: #a0f5ee;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            margin-bottom: 0.6rem;
+        }
+
+        .card-hero h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            color: #ffffff;
+        }
+
+        .card-hero p {
+            margin-top: 0.4rem;
+            color: rgba(224,240,255,0.78);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* ── Group header ────────────────────────────────── */
+        .group-header {
+            display: flex;
+            align-items: center;
+            gap: 0.55rem;
+            margin: 1.5rem 0 0.6rem;
+            padding-bottom: 0.4rem;
+            border-bottom: 1.5px solid var(--line);
+        }
+
+        .group-header span {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        /* ── Form grid ───────────────────────────────────── */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        label {
+            font-size: 0.74rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 0.72rem 0.9rem;
+            border: 1.5px solid rgba(140,165,200,0.30);
+            border-radius: 10px;
+            background: #fbfcfe;
+            color: var(--ink);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.96rem;
+            transition: border-color 0.18s ease, box-shadow 0.18s ease;
+            appearance: none;
+            -webkit-appearance: none;
+        }
+
+        input[type="number"]:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--brand);
+            box-shadow: 0 0 0 4px rgba(0,212,200,0.14);
+            background: #ffffff;
+        }
+
+        /* ── Range bar ───────────────────────────────────── */
+        .range-bar { margin-top: 3px; }
+        .range-bar-bg { height: 4px; border-radius: 4px; background: rgba(140,165,200,0.20); overflow:hidden; }
+        .range-bar-fill { height:100%; border-radius:4px; background: linear-gradient(90deg, var(--brand), var(--brand-2)); transition: width 0.4s ease; }
+
+        /* ── Predict button ──────────────────────────────── */
+        .btn-row { margin-top: 1.75rem; display:flex; justify-content:center; }
+
+        .btn-predict {
+            padding: 0.9rem 2.5rem;
+            border: none;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #00c4b8 0%, var(--brand-2) 100%);
+            color: #ffffff;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 12px 28px rgba(59,108,255,0.24);
+            transition: transform 0.18s ease, box-shadow 0.18s ease;
+            min-width: 220px;
+        }
+
+        .btn-predict:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 18px 36px rgba(59,108,255,0.32);
+        }
+
+        /* ── Result banner ───────────────────────────────── */
+        .result-area { margin-top: 1.5rem; }
+
+        .result-banner {
+            border-radius: 18px;
+            padding: 1.4rem 1.6rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+            animation: riseIn 0.4s ease both;
+        }
+
+        .result-banner.positive {
+            background: linear-gradient(135deg, #450a0a 0%, #7f1d1d 55%, #991b1b 100%);
+            border: 1px solid rgba(239,68,68,0.55);
+            box-shadow: 0 0 0 1px rgba(239,68,68,0.12), 0 22px 55px rgba(185,28,28,0.26);
+            animation: pulseBanner 2.2s ease-in-out infinite;
+        }
+
+        .result-banner.negative {
+            background: linear-gradient(135deg, #052e16 0%, #14532d 55%, #166534 100%);
+            border: 1px solid rgba(34,197,94,0.50);
+            box-shadow: 0 0 0 1px rgba(34,197,94,0.12), 0 22px 55px rgba(22,101,52,0.26);
+        }
+
+        @keyframes pulseBanner {
+            0%, 100% { box-shadow: 0 0 0 1px rgba(239,68,68,0.12), 0 22px 55px rgba(185,28,28,0.26); }
+            50%       { box-shadow: 0 0 0 4px rgba(239,68,68,0.22), 0 26px 64px rgba(185,28,28,0.36); }
+        }
+
+        .result-icon { font-size: 2.2rem; line-height: 1; }
+
+        .result-label {
+            display: inline-block;
+            padding: 0.22rem 0.65rem;
+            border-radius: 999px;
+            font-size: 0.66rem;
+            font-weight: 800;
+            letter-spacing: 0.10em;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .result-banner.positive .result-label { background: rgba(239,68,68,0.22); color: #fca5a5; border: 1px solid rgba(252,165,165,0.20); }
+        .result-banner.negative .result-label { background: rgba(34,197,94,0.18); color: #86efac;  border: 1px solid rgba(134,239,172,0.20); }
+
+        .result-text { font-family: 'Space Grotesk', sans-serif; font-size: 1.2rem; font-weight: 700; letter-spacing: -0.02em; }
+        .result-banner.positive .result-text { color: #fff1f1; }
+        .result-banner.negative .result-text { color: #f0fdf4; }
+
+        .result-conf-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 3px; }
+        .result-banner.positive .result-conf-label { color: #fca5a5; }
+        .result-banner.negative .result-conf-label { color: #86efac; }
+        .result-conf-value { font-family: 'Space Grotesk', sans-serif; font-size: 1.8rem; font-weight: 800; letter-spacing: -0.04em; color: #ffffff; }
+
+        .result-conf-bar-bg  { height: 5px; border-radius: 5px; background: rgba(255,255,255,0.12); overflow:hidden; margin-top:5px; }
+        .result-conf-bar-fill { height:100%; border-radius:5px; }
+        .result-banner.positive .result-conf-bar-fill { background: #fca5a5; }
+        .result-banner.negative .result-conf-bar-fill { background: #86efac; }
+
+        .result-error {
+            border-radius: 14px;
+            padding: 1rem 1.25rem;
+            background: rgba(239,68,68,0.08);
+            border: 1px solid rgba(239,68,68,0.24);
+            color: #b91c1c;
+            font-weight: 600;
+        }
+
+        /* ── Page hidden ─────────────────────────────────── */
+        .module-page { display: none; }
+        .module-page.active { display: block; }
+
+        /* ── Disclaimer ──────────────────────────────────── */
+        .disclaimer {
+            margin-top: 2rem;
+            padding: 1rem 1.25rem;
+            background: rgba(245,158,11,0.08);
+            border: 1px solid rgba(245,158,11,0.24);
+            border-left: 4px solid var(--accent);
+            border-radius: 12px;
+            color: #7c4c00;
+            font-size: 0.93rem;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 600px) {
+            .form-grid { grid-template-columns: 1fr; }
+            .module-tabs { flex-direction: column; }
+            .card { padding: 1.25rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-badge">
+            <div class="beacon-dot"></div>
+            AI Screening System
+        </div>
+        <h1>🏥 Multiple Disease Prediction</h1>
+        <p>Enter your clinical parameters to assess risk for Diabetes, Heart Disease, or Parkinson's Disease using AI-powered models.</p>
+    </header>
+
+    <main>
+        <!-- Module Tabs -->
+        <div class="module-tabs">
+            <button class="tab-btn active" onclick="switchTab('diabetes')">🩸 Diabetes</button>
+            <button class="tab-btn" onclick="switchTab('heart')">❤️ Heart Disease</button>
+            <button class="tab-btn" onclick="switchTab('parkinsons')">🧠 Parkinson's</button>
+        </div>
+
+        <!-- ╔══════════════════════════════════════╗ -->
+        <!-- ║  DIABETES                            ║ -->
+        <!-- ╚══════════════════════════════════════╝ -->
+        <div id="page-diabetes" class="module-page active">
+            <div class="card">
+                <div class="card-hero">
+                    <span class="card-hero-badge">Module 01</span>
+                    <h2>🩸 Diabetes Risk Assessment</h2>
+                    <p>Eight metabolic indicators including glucose, BMI, insulin level, and family-risk score.</p>
+                </div>
+
+                <form id="diabetesForm" onsubmit="handleDiabetes(event)">
+
+                    <div class="group-header">
+                        <span>📊 Reproductive &amp; Metabolic</span>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="d_pregnancies">Pregnancies</label>
+                            <input type="number" id="d_pregnancies" name="pregnancies" min="0" max="20" value="0" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="d_glucose">Glucose Level (mg/dL)</label>
+                            <input type="number" id="d_glucose" name="glucose" min="70" max="200" value="120" required>
+                            <div class="range-bar"><div class="range-bar-bg"><div class="range-bar-fill" id="d_glucose_bar" style="width:36%"></div></div></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="d_bp">Blood Pressure (mm Hg)</label>
+                            <input type="number" id="d_bp" name="blood_pressure" min="40" max="130" value="80" required>
+                        </div>
+                    </div>
+
+                    <div class="group-header" style="margin-top:1.25rem;">
+                        <span>🧪 Lab Values</span>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="d_skin">Skin Thickness (mm)</label>
+                            <input type="number" id="d_skin" name="skin_thickness" min="0" max="100" value="20" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="d_insulin">Insulin (mu U/ml)</label>
+                            <input type="number" id="d_insulin" name="insulin" min="0" max="850" value="80" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="d_bmi">BMI</label>
+                            <input type="number" id="d_bmi" name="bmi" min="10" max="70" step="0.1" value="25.0" required>
+                        </div>
+                    </div>
+
+                    <div class="group-header" style="margin-top:1.25rem;">
+                        <span>👤 Demographics &amp; Family History</span>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="d_dpf">Diabetes Pedigree Function</label>
+                            <input type="number" id="d_dpf" name="diabetes_pedigree" min="0" max="2.5" step="0.001" value="0.5" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="d_age">Age (years)</label>
+                            <input type="number" id="d_age" name="age" min="21" max="90" value="35" required>
+                        </div>
+                    </div>
+
+                    <div class="btn-row">
+                        <button type="submit" class="btn-predict">Predict Diabetes Risk</button>
+                    </div>
+                </form>
+                <div class="result-area" id="diabetesResult"></div>
+            </div>
+            <div class="disclaimer">
+                <strong>Medical disclaimer:</strong> Predictions are informational only and should not replace professional medical diagnosis or treatment.
+            </div>
+        </div>
+
+        <!-- ╔══════════════════════════════════════╗ -->
+        <!-- ║  HEART DISEASE                       ║ -->
+        <!-- ╚══════════════════════════════════════╝ -->
+        <div id="page-heart" class="module-page">
+            <div class="card">
+                <div class="card-hero">
+                    <span class="card-hero-badge">Module 02</span>
+                    <h2>❤️ Heart Disease Risk Assessment</h2>
+                    <p>Thirteen cardiovascular markers including ECG profile, cholesterol, and exertion response.</p>
+                </div>
+
+                <form id="heartForm" onsubmit="handleHeart(event)">
+
+                    <div class="group-header">
+                        <span>👤 Demographics</span>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="h_age">Age</label>
+                            <input type="number" id="h_age" name="age" min="29" max="77" value="45" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="h_sex">Sex</label>
+                            <select id="h_sex" name="sex" required>
+                                <option value="1">Male</option>
+                                <option value="0">Female</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="h_cp">Chest Pain Type</label>
+                            <select id="h_cp" name="cp" required>
+                                <option value="0">Typical Angina</option>
+                                <option value="1">Atypical Angina</option>
+                                <option value="2">Non-anginal Pain</option>
+                                <option value="3">Asymptomatic</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="group-header" style="margin-top:1.25rem;">
+                        <span>❤️ Cardiovascular Vitals</span>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="h_trestbps">Resting Blood Pressure (mmHg)</label>
+                            <input type="number" id="h_trestbps" name="trestbps" min="90" max="200" value="120" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="h_chol">Cholesterol (mg/dL)</label>
+                            <input type="number" id="h_chol" name="chol" min="126" max="564" value="200" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="h_thalach">Max Heart Rate</label>
+                            <input type="number" id="h_thalach" name="thalach" min="71" max="202" value="150" required>
+                        </div>
+                    </div>
+
+                    <div class="group-header" style="margin-top:1.25rem;">
+                        <span>🧪 Lab Results</span>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="h_fbs">Fasting Blood Sugar &gt; 120 mg/dL</label>
+                            <select id="h_fbs" name="fbs" required>
+                                <option value="0">No</option>
+                                <option value="1">Yes</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="h_restecg">Resting ECG</label>
+                            <select id="h_restecg" name="restecg" required>
+                                <option value="0">Normal</option>
+                                <option value="1">ST-T Wave Abnormality</option>
+                                <option value="2">Left Ventricular Hypertrophy</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="h_exang">Exercise Induced Angina</label>
+                            <select id="h_exang" name="exang" required>
+                                <option value="0">No</option>
+                                <option value="1">Yes</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="group-header" style="margin-top:1.25rem;">
+                        <span>📈 Exercise &amp; Stress Test</span>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="h_oldpeak">ST Depression</label>
+                            <input type="number" id="h_oldpeak" name="oldpeak" min="0" max="6.2" step="0.1" value="0.0" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="h_slope">Slope of Peak ST Segment</label>
+                            <select id="h_slope" name="slope" required>
+                                <option value="0">Upsloping</option>
+                                <option value="1">Flat</option>
+                                <option value="2">Downsloping</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="h_ca">Number of Major Vessels (0-3)</label>
+                            <input type="number" id="h_ca" name="ca" min="0" max="3" value="0" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="h_thal">Thalassemia</label>
+                            <select id="h_thal" name="thal" required>
+                                <option value="1">Normal</option>
+                                <option value="2">Fixed Defect</option>
+                                <option value="3">Reversible Defect</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="btn-row">
+                        <button type="submit" class="btn-predict">Predict Heart Disease Risk</button>
+                    </div>
+                </form>
+                <div class="result-area" id="heartResult"></div>
+            </div>
+            <div class="disclaimer">
+                <strong>Medical disclaimer:</strong> Predictions are informational only and should not replace professional cardiology consultation.
+            </div>
+        </div>
+
+        <!-- ╔══════════════════════════════════════╗ -->
+        <!-- ║  PARKINSON'S                         ║ -->
+        <!-- ╚══════════════════════════════════════╝ -->
+        <div id="page-parkinsons" class="module-page">
+            <div class="card">
+                <div class="card-hero">
+                    <span class="card-hero-badge">Module 03</span>
+                    <h2>🧠 Parkinson's Risk Assessment</h2>
+                    <p>Voice biomarkers analyzing shimmer, jitter, entropy, and nonlinear signal traits via the /predict/parkinsons endpoint.</p>
+                </div>
+
+                <form id="parkinsonsForm" onsubmit="handleParkinsons(event)">
+
+                    <div class="group-header">
+                        <span>🎙️ Fundamental Frequency</span>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="p_fo">MDVP:Fo(Hz) — Avg vocal freq</label>
+                            <input type="number" id="p_fo" name="fo" min="80" max="260" step="1" value="120" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="p_fhi">MDVP:Fhi(Hz) — Max vocal freq</label>
+                            <input type="number" id="p_fhi" name="fhi" min="100" max="500" step="1" value="200" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="p_flo">MDVP:Flo(Hz) — Min vocal freq</label>
+                            <input type="number" id="p_flo" name="flo" min="50" max="200" step="1" value="70" required>
+                        </div>
+                    </div>
+
+                    <div class="group-header" style="margin-top:1.25rem;">
+                        <span>〰️ Jitter (Frequency Variation)</span>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="p_jitter_pct">MDVP:Jitter(%)</label>
+                            <input type="number" id="p_jitter_pct" name="jitter_percent" min="0" max="2" step="0.001" value="0.003" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="p_jitter_abs">MDVP:Jitter(Abs)</label>
+                            <input type="number" id="p_jitter_abs" name="jitter_abs" min="0" max="0.1" step="0.001" value="0.02" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="p_rap">MDVP:RAP</label>
+                            <input type="number" id="p_rap" name="rap" min="0" max="0.1" step="0.001" value="0.02" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="p_ppq">MDVP:PPQ</label>
+                            <input type="number" id="p_ppq" name="ppq" min="0" max="0.1" step="0.001" value="0.02" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="p_ddp">Jitter:DDP</label>
+                            <input type="number" id="p_ddp" name="ddp" min="0" max="0.1" step="0.001" value="0.02" required>
+                        </div>
+                    </div>
+
+                    <div class="group-header" style="margin-top:1.25rem;">
+                        <span>📶 Shimmer (Amplitude Variation)</span>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="p_shimmer">MDVP:Shimmer</label>
+                            <input type="number" id="p_shimmer" name="shimmer" min="0" max="10" step="0.1" value="2.0" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="p_shimmer_db">MDVP:Shimmer(dB)</label>
+                            <input type="number" id="p_shimmer_db" name="shimmer_db" min="0" max="2" step="0.01" value="0.3" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="p_apq3">Shimmer:APQ3</label>
+                            <input type="number" id="p_apq3" name="apq3" min="0" max="0.1" step="0.001" value="0.02" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="p_apq5">Shimmer:APQ5</label>
+                            <input type="number" id="p_apq5" name="apq5" min="0" max="0.1" step="0.001" value="0.02" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="p_apq">MDVP:APQ</label>
+                            <input type="number" id="p_apq" name="apq" min="0" max="0.1" step="0.001" value="0.02" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="p_dda">Shimmer:DDA</label>
+                            <input type="number" id="p_dda" name="dda" min="0" max="0.1" step="0.001" value="0.02" required>
+                        </div>
+                    </div>
+
+                    <div class="group-header" style="margin-top:1.25rem;">
+                        <span>🔊 Noise Ratios &amp; Nonlinear Measures</span>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="p_nhr">NHR — Noise-to-Harmonics</label>
+                            <input type="number" id="p_nhr" name="nhr" min="0" max="1" step="0.01" value="0.1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="p_hnr">HNR — Harmonics-to-Noise</label>
+                            <input type="number" id="p_hnr" name="hnr" min="0" max="40" step="0.1" value="20.0" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="p_rpde">RPDE</label>
+                            <input type="number" id="p_rpde" name="rpde" min="0" max="1" step="0.01" value="0.4" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="p_dfa">DFA</label>
+                            <input type="number" id="p_dfa" name="dfa" min="0" max="1" step="0.01" value="0.6" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="p_spread1">spread1</label>
+                            <input type="number" id="p_spread1" name="spread1" min="-10" max="10" step="0.1" value="0.0" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="p_spread2">spread2</label>
+                            <input type="number" id="p_spread2" name="spread2" min="0" max="10" step="0.1" value="2.0" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="p_d2">D2 — Correlation Dimension</label>
+                            <input type="number" id="p_d2" name="d2" min="0" max="5" step="0.1" value="2.0" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="p_ppe">PPE — Pitch Period Entropy</label>
+                            <input type="number" id="p_ppe" name="ppe" min="0" max="1" step="0.01" value="0.2" required>
+                        </div>
+                    </div>
+
+                    <div class="btn-row">
+                        <button type="submit" class="btn-predict">Predict Parkinson's Risk</button>
+                    </div>
+                </form>
+                <div class="result-area" id="parkinsonsResult"></div>
+            </div>
+            <div class="disclaimer">
+                <strong>Medical disclaimer:</strong> Voice-based predictions are for educational screening only. Consult a neurologist for clinical assessment.
+            </div>
+        </div>
+    </main>
+
+    <script>
+        /* ── Tab switching ─────────────────────────────── */
+        function switchTab(module) {
+            document.querySelectorAll('.module-page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('page-' + module).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+
+        /* ── Result renderer ───────────────────────────── */
+        function renderResult(container, prediction, isDiabetic) {
+            if (!prediction) { container.innerHTML = ''; return; }
+
+            const isPositive = typeof prediction === 'string'
+                ? (prediction.toLowerCase().includes('has') ||
+                   prediction.toLowerCase().includes('diabetic') ||
+                   (prediction.toLowerCase().includes('disease') && !prediction.toLowerCase().includes('no ')))
+                : false;
+
+            const icon    = isPositive ? '⚠️' : '✅';
+            const badge   = isPositive ? 'HIGH RISK' : 'LOW RISK';
+            const cls     = isPositive ? 'positive' : 'negative';
+
+            container.innerHTML = `
+            <div class="result-banner ${cls}">
+                <div style="display:flex;align-items:center;gap:0.75rem;">
+                    <span class="result-icon">${icon}</span>
+                    <div>
+                        <span class="result-label">${badge}</span>
+                        <p class="result-text">${prediction}</p>
+                    </div>
+                </div>
+                <div style="min-width:120px;text-align:right;">
+                    <p class="result-conf-label">Model Prediction</p>
+                    <p class="result-conf-value" style="font-size:1rem;">${prediction}</p>
+                </div>
+            </div>`;
+        }
+
+        function renderError(container, msg) {
+            container.innerHTML = `<div class="result-error">⚠ ${msg}</div>`;
+        }
+
+        /* ── Diabetes ─────────────────────────────────── */
+        document.getElementById('diabetesForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const data = Object.fromEntries(new FormData(e.target).entries());
+            const out  = document.getElementById('diabetesResult');
+            out.innerHTML = '<p style="text-align:center;color:var(--muted);padding:1rem 0;">⏳ Analysing…</p>';
+            try {
+                const res  = await fetch('/predict/diabetes', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(data) });
+                const json = await res.json();
+                if (json.error) renderError(out, json.error);
+                else renderResult(out, json.prediction);
+            } catch (err) { renderError(out, err.message); }
+        });
+
+        /* ── Heart ──────────────────────────────────────── */
+        document.getElementById('heartForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const data = Object.fromEntries(new FormData(e.target).entries());
+            const out  = document.getElementById('heartResult');
+            out.innerHTML = '<p style="text-align:center;color:var(--muted);padding:1rem 0;">⏳ Analysing…</p>';
+            try {
+                const res  = await fetch('/predict/heart', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(data) });
+                const json = await res.json();
+                if (json.error) renderError(out, json.error);
+                else renderResult(out, json.prediction);
+            } catch (err) { renderError(out, err.message); }
+        });
+
+        /* ── Parkinson's ────────────────────────────────── */
+        document.getElementById('parkinsonsForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const data = Object.fromEntries(new FormData(e.target).entries());
+            const out  = document.getElementById('parkinsonsResult');
+            out.innerHTML = '<p style="text-align:center;color:var(--muted);padding:1rem 0;">⏳ Analysing…</p>';
+            try {
+                const res  = await fetch('/predict/parkinsons', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(data) });
+                const json = await res.json();
+                if (json.error) renderError(out, json.error);
+                else renderResult(out, json.prediction);
+            } catch (err) { renderError(out, err.message); }
+        });
+
+        /* ── Live range bar for glucose ─────────────────── */
+        const glucoseInput = document.getElementById('d_glucose');
+        const glucoseBar   = document.getElementById('d_glucose_bar');
+        if (glucoseInput && glucoseBar) {
+            glucoseInput.addEventListener('input', () => {
+                const v = parseFloat(glucoseInput.value) || 0;
+                const pct = Math.min(100, Math.max(0, ((v - 70) / (200 - 70)) * 100));
+                glucoseBar.style.width = pct + '%';
+                glucoseBar.style.background = v <= 140
+                    ? 'linear-gradient(90deg,#22c55e,#4ade80)'
+                    : v <= 199
+                        ? 'linear-gradient(90deg,#f59e0b,#fbbf24)'
+                        : 'linear-gradient(90deg,#ef4444,#f87171)';
+            });
+        }
+    </script>
+</body>
+</html>
