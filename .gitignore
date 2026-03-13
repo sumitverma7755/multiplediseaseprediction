@@ -1,8 +1,6 @@
 .venv/
 __pycache__/
-*.sav
 *.sav.bak
-*.pkl
 users.db
 .ipynb_checkpoints/
 .DS_Store
