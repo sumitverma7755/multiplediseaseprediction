@@ -548,20 +548,22 @@ def create_trend_line(x_values, y_values, x_label, y_label):
     return fig
 
 # Load the saved models
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
 try:
-    diabetes_model = pickle.load(open('diabetes_model.sav', 'rb'))
+    diabetes_model = pickle.load(open(os.path.join(BASE_DIR, 'diabetes_model.sav'), 'rb'))
 except Exception as e:
     st.error(f"Error loading diabetes model: {str(e)}")
     diabetes_model = DummyModel("Diabetes")
 
 try:
-    heart_disease_model = pickle.load(open('heart_disease_model.sav', 'rb'))
+    heart_disease_model = pickle.load(open(os.path.join(BASE_DIR, 'heart_disease_model.sav'), 'rb'))
 except Exception as e:
     st.error(f"Error loading heart disease model: {str(e)}")
     heart_disease_model = DummyModel("Heart Disease")
 
 try:
-    parkinsons_model = pickle.load(open('parkinsons_model.sav', 'rb'))
+    parkinsons_model = pickle.load(open(os.path.join(BASE_DIR, 'parkinsons_model.sav'), 'rb'))
 except Exception as e:
     st.error(f"Error loading parkinsons model: {str(e)}")
     parkinsons_model = DummyModel("Parkinsons")
