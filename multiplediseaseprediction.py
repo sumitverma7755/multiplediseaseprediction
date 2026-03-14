@@ -282,9 +282,9 @@ def plot_feature_importance(features, importance_scores):
     # Customize layout
     fig.update_layout(
         height=400,
-        margin=dict(l=20, r=20, t=40, b=20),
-        title_font=dict(size=20, color='#1e3a8a'),
-        font=dict(family='Segoe UI, Arial, sans-serif', color='#333333'),
+        margin={"l": 20, "r": 20, "t": 40, "b": 20},
+        title_font={"size": 20, "color": '#1e3a8a'},
+        font={"family": 'Segoe UI, Arial, sans-serif', "color": '#333333'},
         xaxis_title_font=dict(size=14),
         yaxis_title_font=dict(size=14)
     )
@@ -310,7 +310,7 @@ def plot_prediction_proba(prediction_proba):
     fig = go.Figure(go.Indicator(
         mode="gauge+number",
         value=positive_proba * 100,
-        title={'text': "Prediction Probability", 'font': {'size': 24, 'color': '#1e3a8a'}},
+        title={"text": "Prediction Probability", "font": {"size": 24, "color": '#1e3a8a'}},
         gauge={
             'axis': {'range': [0, 100], 'tickwidth': 1, 'tickcolor': "#333333"},
             'bar': {'color': "#1e40af"},
@@ -372,24 +372,9 @@ def create_metrics_chart(metrics_values, metrics_labels, metrics_ranges):
     # Customize layout
     fig.update_layout(
         title="Health Metrics",
-        title_font=dict(size=20, color='#1e3a8a'),
-        xaxis=dict(
-            title=dict(
-                text="Metrics",
-                font=dict(size=14)
-            ),
-            tickfont=dict(size=12)
-        ),
-        yaxis=dict(
-            title=dict(
-                text="Value",
-                font=dict(size=14)
-            ),
-            tickfont=dict(size=12)
-        ),
-        height=400,
-        margin=dict(l=20, r=20, t=50, b=20),
-        font=dict(family='Segoe UI, Arial, sans-serif', color='#333333')
+        title_font={"size": 20, "color": '#1e3a8a'},
+        xaxis={"title": {"text": "Metrics", "font": {"size": 14}}, "tickfont": {"size": 12}},
+        yaxis={"title": {"text": "Value", "font": {"size": 14}}, "tickfont": {"size": 12}}
     )
     
     return fig
@@ -412,7 +397,7 @@ def create_distribution_plot(values, title, normal_range=None):
             y=np.exp(-0.5 * ((np.linspace(min(values), max(values), 100) - np.mean(values)) / np.std(values))**2) / (np.std(values) * np.sqrt(2 * np.pi)) * len(values) * (max(values) - min(values)) / 30,
             mode='lines',
             name='Distribution',
-            line=dict(color='#1e40af', width=2)
+            line={"color": '#1e40af', "width": 2}
         )
     )
     
@@ -451,9 +436,9 @@ def create_distribution_plot(values, title, normal_range=None):
     # Customize layout
     fig.update_layout(
         height=300,
-        margin=dict(l=20, r=20, t=50, b=20),
-        title_font=dict(size=18, color='#1e3a8a'),
-        font=dict(family='Segoe UI, Arial, sans-serif', color='#333333'),
+        margin={"l": 20, "r": 20, "t": 50, "b": 20},
+        title_font={"size": 18, "color": '#1e3a8a'},
+        font={"family": 'Segoe UI, Arial, sans-serif', "color": '#333333'},
         showlegend=True
     )
     
@@ -486,24 +471,12 @@ def create_comparison_chart(user_values, population_means, labels):
     # Customize layout
     fig.update_layout(
         title="Your Values vs Population Average",
-        title_font=dict(size=18, color='#1e3a8a'),
-        xaxis=dict(
-            title=dict(
-                text="Metrics",
-                font=dict(size=14)
-            ),
-            tickfont=dict(size=12)
-        ),
-        yaxis=dict(
-            title=dict(
-                text="Value",
-                font=dict(size=14)
-            ),
-            tickfont=dict(size=12)
-        ),
+        title_font={"size": 18, "color": '#1e3a8a'},
+        xaxis={"title": {"text": "Metrics", "font": {"size": 14}}, "tickfont": {"size": 12}},
+        yaxis={"title": {"text": "Value", "font": {"size": 14}}, "tickfont": {"size": 12}},
         height=350,
-        margin=dict(l=20, r=20, t=50, b=20),
-        font=dict(family='Segoe UI, Arial, sans-serif', color='#333333'),
+        margin={"l": 20, "r": 20, "t": 50, "b": 20},
+        font={"family": 'Segoe UI, Arial, sans-serif', "color": '#333333'},
         barmode='group'
     )
     
@@ -519,27 +492,15 @@ def create_trend_line(x_values, y_values, x_label, y_label):
         y=y_values,
         mode='lines',
         name='Trend',
-        line=dict(color='#3b82f6', width=2)
+        line={"color": '#3b82f6', "width": 2}
     ))
     
     # Customize layout
     fig.update_layout(
         title=f"{y_label} vs {x_label}",
-        title_font=dict(size=18, color='#1e3a8a'),
-        xaxis=dict(
-            title=dict(
-                text=x_label,
-                font=dict(size=14)
-            ),
-            tickfont=dict(size=12)
-        ),
-        yaxis=dict(
-            title=dict(
-                text=y_label,
-                font=dict(size=14)
-            ),
-            tickfont=dict(size=12)
-        ),
+        title_font={"size": 18, "color": '#1e3a8a'},
+        xaxis={"title": {"text": x_label, "font": {"size": 14}}, "tickfont": {"size": 12}},
+        yaxis={"title": {"text": y_label, "font": {"size": 14}}, "tickfont": {"size": 12}},
         height=300,
         margin=dict(l=20, r=20, t=50, b=20),
         font=dict(family='Segoe UI, Arial, sans-serif', color='#333333')
@@ -1588,34 +1549,34 @@ def render_page_hero(title, subtitle, tag_text=""):
 
 def render_feature_grid(items):
     """Render a responsive feature-card grid."""
-    cards_html = []
+    cards_html: list[str] = []
     for item in items:
         tag = item.get("tag", "")
         tag_html = f"<span class='tag'>{tag}</span>" if tag else ""
         cards_html.append(
-            f"""
+            str(f"""
 <article class="feature-card">
     {tag_html}
 <h4>{item['title']}</h4>
 <p>{item['body']}</p>
 </article>
-            """
+            """)
         )
     st.markdown(f"<section class='feature-grid'>{''.join(cards_html)}</section>", unsafe_allow_html=True)
 
 def render_doc_grid(items):
     """Render documentation-style content cards."""
-    cards_html = []
+    cards_html: list[str] = []
     for item in items:
         title = item["title"]
         body = item["body"]
         cards_html.append(
-            f"""
+            str(f"""
 <article class="doc-card">
 <h3>{title}</h3>
 <p>{body}</p>
 </article>
-            """
+            """)
         )
     st.markdown(f"<section class='doc-grid'>{''.join(cards_html)}</section>", unsafe_allow_html=True)
 
@@ -3394,9 +3355,17 @@ elif (selected == 'Requirements'):
         })
 
     if dependency_cards:
-        render_doc_grid(dependency_cards[:6])
-        if len(dependency_cards) > 6:
-            render_doc_grid(dependency_cards[6:])
+        if len(dependency_cards) <= 6:
+            render_doc_grid(dependency_cards)
+        else:
+            first_six = []
+            for i in range(6):
+                first_six.append(dependency_cards[i])
+            render_doc_grid(first_six)
+            rest = []
+            for i in range(6, len(dependency_cards)):
+                rest.append(dependency_cards[i])
+            render_doc_grid(rest)
 
     setup_col, support_col = st.columns([1.2, 1], gap="large")
     with setup_col:
