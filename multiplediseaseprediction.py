@@ -511,23 +511,33 @@ def create_trend_line(x_values, y_values, x_label, y_label):
 # Load the saved models
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-try:
-    diabetes_model = pickle.load(open(os.path.join(BASE_DIR, 'diabetes_model.sav'), 'rb'))
-except Exception as e:
-    st.error(f"Error loading diabetes model: {str(e)}")
-    diabetes_model = DummyModel("Diabetes")
+@st.cache_resource(show_spinner="Loading Models...")
+def load_diabetes_model():
+    try:
+        return pickle.load(open(os.path.join(BASE_DIR, 'diabetes_model.sav'), 'rb'))
+    except Exception as e:
+        st.error(f"Error loading diabetes model: {str(e)}")
+        return DummyModel("Diabetes")
 
-try:
-    heart_disease_model = pickle.load(open(os.path.join(BASE_DIR, 'heart_disease_model.sav'), 'rb'))
-except Exception as e:
-    st.error(f"Error loading heart disease model: {str(e)}")
-    heart_disease_model = DummyModel("Heart Disease")
+@st.cache_resource(show_spinner=False)
+def load_heart_disease_model():
+    try:
+        return pickle.load(open(os.path.join(BASE_DIR, 'heart_disease_model.sav'), 'rb'))
+    except Exception as e:
+        st.error(f"Error loading heart disease model: {str(e)}")
+        return DummyModel("Heart Disease")
 
-try:
-    parkinsons_model = pickle.load(open(os.path.join(BASE_DIR, 'parkinsons_model.sav'), 'rb'))
-except Exception as e:
-    st.error(f"Error loading parkinsons model: {str(e)}")
-    parkinsons_model = DummyModel("Parkinsons")
+@st.cache_resource(show_spinner=False)
+def load_parkinsons_model():
+    try:
+        return pickle.load(open(os.path.join(BASE_DIR, 'parkinsons_model.sav'), 'rb'))
+    except Exception as e:
+        st.error(f"Error loading parkinsons model: {str(e)}")
+        return DummyModel("Parkinsons")
+
+diabetes_model = load_diabetes_model()
+heart_disease_model = load_heart_disease_model()
+parkinsons_model = load_parkinsons_model()
 
 # Set page configuration with light background and dark text
 st.set_page_config(

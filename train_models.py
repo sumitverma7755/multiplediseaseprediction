@@ -6,11 +6,11 @@ Run this script once to produce:
   - parkinsons_model.sav
 """
 import os, pickle
-import pandas as pd
-from sklearn.preprocessing import StandardScaler
-from sklearn.model_selection import train_test_split
-from sklearn.svm import SVC
-from sklearn.ensemble import RandomForestClassifier
+import pandas as pd  # type: ignore
+from sklearn.preprocessing import StandardScaler  # type: ignore
+from sklearn.model_selection import train_test_split  # type: ignore
+from sklearn.svm import SVC  # type: ignore
+from sklearn.ensemble import RandomForestClassifier  # type: ignore
 
 BASE = os.path.dirname(os.path.abspath(__file__))
 
